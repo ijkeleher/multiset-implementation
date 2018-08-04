@@ -1,0 +1,11 @@
+step 1 - set up git // DONE
+
+step 2 - fill out skeleton code
+2.1 linkedlistmultiset - inci
+2.2 hasmultiset - inci
+2.3 baltreemultiset - ken
+2.4 bstmultiset - ken
+
+step 3 - sortedlinkedlist
+
+step 4 - implement driver class
