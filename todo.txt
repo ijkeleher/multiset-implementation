@@ -9,3 +9,5 @@ step 2 - fill out skeleton code
 step 3 - sortedlinkedlist
 
 step 4 - implement driver class
+
+step 5. test with python script
