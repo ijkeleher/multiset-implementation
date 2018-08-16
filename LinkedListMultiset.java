@@ -1,21 +1,22 @@
 import java.io.PrintStream;
 import java.util.*;
 
+/**
+* @param T Type of elements that the multiset can hold.
+* 
+*/
+
 public class LinkedListMultiset<T> extends Multiset<T>
 {
-
-	/** Reference to head node. */
-	protected Node mHead;
-
-	/** Length of list. */
-	protected int mLength;
-
-	/** constructor */
+  /** Reference to head node. */
+	private LinkedListNode<T> head;
+  /** Length of list. */
+	private int size = 0;
+  /** constructor */
 	public LinkedListMultiset() {
-
-			mHead = null;
-			mLength = 0;
-		}
+		head = null;
+		size = 0;
+	} // end of LinkedListMultiset()
 
 
 	public void add(T item) {
@@ -97,12 +98,14 @@ public class LinkedListMultiset<T> extends Multiset<T>
 		// Implement me!
 	} // end of print()
 
-	private class Node
+  private class LinkedListNode<T> {
     {
+        /** number of times a value occurs*/
+        private int count;
         /** Stored value of node. */
-        protected int mValue;
+        private T value;
         /** Reference to next node. */
-        protected Node mNext;
+        private LinkedListNode<T> next;
 
         public Node(int value) {
             mValue = value;
