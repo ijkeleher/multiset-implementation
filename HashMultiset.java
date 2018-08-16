@@ -3,9 +3,9 @@ import java.util.*;
 
 /**
  * Hasp table/map implementation of a multiset.  Implements Multiset  abstract class.
- * 
+ *
  * @param T Type of elements that the multiset can hold.
- * 
+ *
  * @author jkcchan
  */
 public class HashMultiset<T> extends Multiset<T>
@@ -34,7 +34,7 @@ public class HashMultiset<T> extends Multiset<T>
 
 	public int search(T item) {
 		int count = 0;
-		
+
 		if (mMap.containsKey(item)) {
 			count = mMap.get(item);
 		}
@@ -54,8 +54,8 @@ public class HashMultiset<T> extends Multiset<T>
 			}
 		}
 	} // end of removeOne()
-	
-	
+
+
 	public void removeAll(T item) {
 		if (mMap.containsKey(item)) {
 			mMap.remove(item);
