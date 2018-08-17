@@ -38,6 +38,14 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 			this.count++;
 		}
 
+		void remove() {
+			this.count--;
+		}
+
+		void removeAll() {
+			this.count = 0;
+		}
+
 	}
 
 	@Override
@@ -72,22 +80,24 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 	@Override
 	public void removeOne(T item) {
 		// Implement me!
+		Node result = search(root, item);
+		result.remove();
 	} // end of removeOne()
 
 	@Override
 	public void removeAll(T item) {
 		// Implement me!
+		Node result = search(root, item);
+		result.removeAll();
 	} // end of removeAll()
 
 	@Override
 	public void print(PrintStream out) {
-		// Implement me!
+		print(root, out);
 	} // end of print()
 
 	public boolean isEmpty(){
-		if(root == null)
-			return true;
-		return false;
+		return root == null;
 	}
 
 	public void add(Node node, T item){
