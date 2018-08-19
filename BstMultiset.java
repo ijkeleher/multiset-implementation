@@ -114,7 +114,7 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T>{
 		if (node == null)
 			node = new Node(item);
 		int compareResult = node.compareTo(item);
-		System.out.println(compareResult);
+		//System.out.println(compareResult);
 		if (compareResult > 0) {
 			node.left = add(node.left, item);
 		}
@@ -125,82 +125,5 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T>{
 			node.addCount();
 		return node;
 	}// end add()
-
-	public Node addd(Node node, T item){
-		if (node == null){
-			node = new Node(item);
-		}
-		node.addCount();
-		return node;
-	}
-
-	public  Node search(Node node, T item){
-		while(node != null){
-			if (node.compareTo(item) == 0)
-				return node;
-			else if (node.compareTo(item) > 0) {
-				node = node.left;
-			}
-			else if (node.compareTo(item) < 0) {
-				node = node.right;
-			}
-		}
-		return node;
-	}// end search()
-
-	public void print(Node node, PrintStream out) {
-		/* ORDERED
-		if (node != null) {
-			print(node.left, out);
-			out.println(node.element + printDelim + node.count);
-			print(node.right, out);
-		}
-		 */
-		if (node != null) {
-			print(node.left, out);
-			out.println(node.element + printDelim + node.count);
-			print(node.right, out);
-		}
-	}// end print()
-
-
-	/*
-	public Node remove(Node node, T item) {
-		if (node == null) {
-			return node;
-		}
-		int compareResult = item.compareTo(node.element);
-		if (compareResult < 0) {
-			node.left = remove(node.left, item);
-		}
-		else if (compareResult > 0) {
-			node.right = remove(node.right, item);
-		}
-		// now node is where the element is.
-		// check if node has no children
-		else if (node.right != null && node.left != null) {
-			node.count = rightMinNode(node).count;
-			node.element = rightMinNode(node).element;
-			node.right = remove(node.right, node.element);
-		}
-		else {
-			if (node.left != null) {
-				node = node.left;
-			}
-			else if (node.right != null) {
-				node = node.right;
-			}
-		}
-		return node;
-	}//end remove()
-
-	public Node rightMinNode(Node node){
-		Node result = node.right;
-		while(result.left != null){
-			result = result.left;
-		}
-		return result;
-	} // end of rightMinNode()
-	 */
 
 } // end of class BstMultiset
