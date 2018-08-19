@@ -11,32 +11,46 @@ import java.util.*;
 public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 	private Node root;
 
-	public BstMultiset() {
+	BstMultiset() {
 		// Implement me!
 		// 1. Initialize root node
 		//root = new Node(null);
 	} // end of BstMultiset()
 
-	class Node{
+	class Node implements Comparable<T>{
 		// Questions remain:
 		// Do we need key for the nodes?
 		// Does these value need to be private?
 		private Node left;
 		private Node right;
 		private T element;
-		private int count;
+		private int count = 0;
 
 		// Does this have to be public
 		Node(T element) {
 			this.element = element;
 			this.left = null;
 			this.right = null;
-			this.count = 1;
 		}
 
 		void addCount() {
 			this.count++;
 		}
+
+		void remove() {
+			this.count--;
+		}
+
+		T getT() {
+			return element;
+		}
+
+
+		@Override
+		public int compareTo(T o) {
+			return getT().compareTo(o);
+		}
+
 
 	}
 
@@ -48,12 +62,9 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		 * root - Else, return add(current node, value)
 		 */
 		// Check if the BST is empty:
-		if (isEmpty()) {
-			this.root = new Node(item);
-		} else {
 			// Add value to current position
-			this.add(root, item);
-		}
+			if (isEmpty())root = add(root, item);
+			else add(root, item);
 	} // end of add()
 
 
@@ -61,67 +72,93 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 	public int search(T item) {
 		Node result = search(root, item);
 		if (result != null)
-			System.out.println(result.element+" is on the tree!");
-		else System.out.println("Value "+ item +" is not found!");
+			return result.count;
+		else
 			//Output result.element and result.addCount
-				//return nothing
-				// default return, please Override when you implement this method
-				return 0;
+			//return nothing
+			// default return, please Override when you implement this method
+			return 0;
 	} // end of add()
 
 	@Override
 	public void removeOne(T item) {
 		// Implement me!
+		Node result = search(root, item);
+		if (result!= null){
+			if (result.count != 0){
+				result.remove();
+			}
+		}
 	} // end of removeOne()
 
 	@Override
 	public void removeAll(T item) {
 		// Implement me!
+		Node result = search(root, item);
+		if (result!= null){
+			if (result.count != 0){
+				result.count = 0;
+			}
+			//else result.remove();
+		}
+		//root = remove(root, item);
 	} // end of removeAll()
 
 	@Override
 	public void print(PrintStream out) {
-		// Implement me!
+		print(root, out);
 	} // end of print()
 
 	public boolean isEmpty(){
-		if(root == null)
-			return true;
-		return false;
+		return root == null;
 	}
 
-	public void add(Node node, T item){
-		if (item.compareTo(node.element) == 0)
+	public Node add(Node node, T item){
+		if (node == null)
+			node = new Node(item);
+		int compareResult = node.compareTo(item);
+		//System.out.println(compareResult);
+		if (compareResult > 0) {
+			node.left = add(node.left, item);
+		}
+		else if (compareResult < 0) {
+			node.right = add(node.right, item);
+		}
+		else if (compareResult == 0)
 			node.addCount();
-		else if (item.compareTo(node.element) < 0) {
-			this.add(node.left, item);
-		}
-		else if (item.compareTo(node.element) > 0) {
-			this.add(node.right, item);
-		}
+		return node;
 	}// end add()
+
 
 	public  Node search(Node node, T item){
 		while(node != null){
-			if (item.compareTo(node.element) == 0)
+			if (node.compareTo(item) == 0)
 				return node;
-			else if (item.compareTo(node.element) < 0) {
+			else if (node.compareTo(item) > 0) {
 				node = node.left;
 			}
-			else if (item.compareTo(node.element) > 0) {
+			else if (node.compareTo(item) < 0) {
 				node = node.right;
 			}
-			return node;
 		}
-		return null;
+		return node;
 	}// end search()
 
+
 	public void print(Node node, PrintStream out) {
-		if (node != null) {
-			print(node.left, out);
-			out.print(node.element + printDelim + node.count);
-			print(node.right, out);
-		}
-	}// end print()
+	/* ORDERED
+	if (node != null) {
+		print(node.left, out);
+		out.println(node.element + printDelim + node.count);
+		print(node.right, out);
+	}
+	 */
+	if (node != null) {
+		print(node.left, out);
+		if(node.count != 0)
+		out.println(node.element + printDelim + node.count);
+		print(node.right, out);
+	}
+}// end print()
 
 } // end of class BstMultiset
