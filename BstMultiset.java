@@ -8,16 +8,15 @@ import java.util.*;
  *            Type of elements that the multiset can hold.
  * @author Ken
  */
-public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
+public class BstMultiset<T extends Comparable<T>> extends Multiset<T>{
+
 	private Node root;
 
-	public BstMultiset() {
-		// Implement me!
-		// 1. Initialize root node
+	BstMultiset() {
 		//root = new Node(null);
 	} // end of BstMultiset()
 
-	class Node{
+	class Node implements Comparable<T>{
 		// Questions remain:
 		// Do we need key for the nodes?
 		// Does these value need to be private?
@@ -41,8 +40,13 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 			this.count--;
 		}
 
-		void removeAll() {
-			this.count = 0;
+		T getT() {
+			return element;
+		}
+
+		@Override
+		public int compareTo(T o) {
+			return getT().compareTo(o);
 		}
 
 	}
@@ -55,13 +59,9 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		 * root - Else, return add(current node, value)
 		 */
 		// Check if the BST is empty:
-		if (isEmpty()) {
-			root = new Node(item);
-			root.addCount();
-		} else {
 			// Add value to current position
-			this.add(root, item);
-		}
+			if (isEmpty())root = add(root, item);
+			else add(root, item);
 	} // end of add()
 
 
@@ -71,9 +71,9 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		if (result != null)
 			return result.count;
 		else
-		//Output result.element and result.addCount
-		//return nothing
-		// default return, please Override when you implement this method
+			//Output result.element and result.addCount
+			//return nothing
+			// default return, please Override when you implement this method
 			return 0;
 	} // end of add()
 
@@ -82,17 +82,23 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		// Implement me!
 		Node result = search(root, item);
 		if (result!= null){
-			if (result.count == 1){
-				removeAll(item);
+			if (result.count != 0){
+				result.remove();
 			}
-			else result.remove();
 		}
 	} // end of removeOne()
 
 	@Override
 	public void removeAll(T item) {
 		// Implement me!
-		root = remove(root, item);
+		Node result = search(root, item);
+		if (result!= null){
+			if (result.count != 0){
+				result.count = 0;
+			}
+			//else result.remove();
+		}
+		//root = remove(root, item);
 	} // end of removeAll()
 
 	@Override
@@ -107,25 +113,35 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 	public Node add(Node node, T item){
 		if (node == null)
 			node = new Node(item);
-		if (item.compareTo(node.element) < 0) {
+		int compareResult = node.compareTo(item);
+		System.out.println(compareResult);
+		if (compareResult > 0) {
 			node.left = add(node.left, item);
 		}
-		else if (item.compareTo(node.element) > 0) {
+		else if (compareResult < 0) {
 			node.right = add(node.right, item);
 		}
-		else if (item.compareTo(node.element) == 0)
+		else if (compareResult == 0)
 			node.addCount();
 		return node;
 	}// end add()
 
+	public Node addd(Node node, T item){
+		if (node == null){
+			node = new Node(item);
+		}
+		node.addCount();
+		return node;
+	}
+
 	public  Node search(Node node, T item){
 		while(node != null){
-			if (item.compareTo(node.element) == 0)
+			if (node.compareTo(item) == 0)
 				return node;
-			else if (item.compareTo(node.element) < 0) {
+			else if (node.compareTo(item) > 0) {
 				node = node.left;
 			}
-			else if (item.compareTo(node.element) > 0) {
+			else if (node.compareTo(item) < 0) {
 				node = node.right;
 			}
 		}
@@ -141,12 +157,14 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		}
 		 */
 		if (node != null) {
-			out.println(node.element + printDelim + node.count);
 			print(node.left, out);
+			out.println(node.element + printDelim + node.count);
 			print(node.right, out);
 		}
 	}// end print()
 
+
+	/*
 	public Node remove(Node node, T item) {
 		if (node == null) {
 			return node;
@@ -176,51 +194,6 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		return node;
 	}//end remove()
 
-/*
-	public void delete(Node parent, Node child){
-		if (child.left == null && child.right ==null) {
-			if (child == root){
-				root = null;
-			}
-			else if (parent.compareTo(child.element) < 0) {
-				parent.left = null;
-			}
-			else if (parent.compareTo(child.element) > 0) {
-				parent.right = null;
-			}
-		}
-		else if (child.left == null || child.right == null) {
-			if (child == root) {
-				if (child.left != null) {
-					root = child.left;
-				}
-				else if (child.right != null) {
-					root = child.right;
-				}
-			}
-			else if (parent.compareTo(child.element) < 0) {
-				if (child.left != null) {
-					parent.right = child.left;
-				}
-				else if (child.right != null) {
-					parent.right = child.right;
-				}
-			}
-			else if (parent.compareTo(child.element) > 0) {
-				if (child.left != null) {
-					parent.left = child.left;
-				}
-				else if (child.right != null) {
-					parent.left = child.right;
-				}
-			}
-		}
-		else {
-
-		}
-	}
-	*/
-
 	public Node rightMinNode(Node node){
 		Node result = node.right;
 		while(result.left != null){
@@ -228,5 +201,6 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		}
 		return result;
 	} // end of rightMinNode()
+	 */
 
 } // end of class BstMultiset
