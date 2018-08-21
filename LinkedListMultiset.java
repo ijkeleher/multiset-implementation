@@ -1,132 +1,180 @@
 import java.io.PrintStream;
 import java.util.*;
 
-public class LinkedListMultiset<T> extends Multiset<T>
-{
+/**
+ * @author Inci Keleher s3646416
+ * @param T Type of elements that the multiset can hold.
+ *
+ */
 
-	/** Reference to head node. */
-	protected Node mHead;
+public class LinkedListMultiset<T> extends Multiset<T> {
 
-	/** Length of list. */
-	protected int mLength;
+/** Reference to head node...
+ * not a pointer because java doesn't have pointers?
+ * or it does but they are immutable? ...anyway moving on
+ */
+Node<T, Integer> head;
+int size;
 
-	/** constructor */
-	public LinkedListMultiset() {
+/** constructor */
+public LinkedListMultiset() {
+        head = null;
+        size = 0;
+}           // end of constructor
 
-			mHead = null;
-			mLength = 0;
-		}
 
-
-	public void add(T item) {
-
-        Node newNode = new Node(item);
-
-        // If head is empty, then list is empty and head reference need to be initialised.
-        if (mHead == null) {
-            mHead = newNode;
+public void add(T item) {
+        /** If head is empty, create node with item and set count to 1
+         * and pointer to next node as null and set as head
+         */
+        if (head == null) {
+                Node<T, Integer> newNode = new Node<>(item, 1, null);
+                head = newNode;
+                return;
         }
-        // otherwise, add node to the head of list.
-        else {
-            newNode.setNext(mHead);
-            mHead = newNode;
-
+        /** otherwise, set currentNode to head*/
+        Node<T, Integer> currNode = head;
+        /** iterate through list */
+        while (!currNode.value.equals(item) && currNode.next != null) {
+                currNode = currNode.next;
         }
-
-        mLength++;
-		// Implement me!
-		//doing the assignment
-	} // end of add()
-
-
-	public int search(T item) {
-
-		Node currNode = mHead;
-        for (int i = 0; i < mLength; ++i) {
-        	if (currNode.getValue() == value) {
-        		return true;
-        	}
-            currNode = currNode.getNext();
+        /**if value equal to existing value increment count */
+        if(currNode.value.equals(item)) {
+                currNode.count++;
+                return;
         }
+        /**otherwise add new node and update pointer of previous node */
+        Node<T, Integer> newNode = new Node<>(item, 1, null);
+        currNode.next = newNode;
 
-        return false;
-	} // end of add()
-
-
-	public void removeOne(T item) {
-
-		if (mLength == 0) {
-			return false;
-		}
-
-		Node currNode = mHead;
-		Node prevNode = null;
-
-		// check if value is head node
-		if (currNode.getValue() == value) {
-			mHead = currNode.getNext();
-			mLength--;
-			return true;
-		}
-
-		prevNode = currNode;
-		currNode = currNode.getNext();
-
-		while (currNode != null) {
-			if (currNode.getValue() == value) {
-				prevNode.setNext(currNode.getNext());
-				currNode = null;
-				mLength--;
-				return true;
-			}
-			prevNode = currNode;
-			currNode = currNode.getNext();
-		}
+}   // end of add()
 
 
-		return false;
-	} // end of removeOne()
+public int search(T item) {
+
+        if (head == null) {
+                return 0;
+        }
+        /** set current node to head of the linkedlist */
+        Node<T, Integer> currNode = head;
+        /** for each element in list check if value matches item */
+        while (!currNode.value.equals(item) && currNode.next != null) {
+                currNode = currNode.next;
+        }
+        /** if we find a match return the count */
+        if(currNode.value.equals(item)) {
+                return currNode.count;
+        }
+        /** return false if no matches found */
+        return 0;
+}   // end of search()
 
 
-	public void removeAll(T item) {
-		// Implement me!
-	} // end of removeAll()
+public void removeOne(T item) {
+        /** removing a SINGLE item from the list */
 
+        /**check if there are nodes to remove */
 
-	public void print(PrintStream out) {
-		// Implement me!
-	} // end of print()
-
-	private class Node
-    {
-        /** Stored value of node. */
-        protected int mValue;
-        /** Reference to next node. */
-        protected Node mNext;
-
-        public Node(int value) {
-            mValue = value;
-            mNext = null;
+        if (head == null) {
+                return;
         }
 
-        public int getValue() {
-            return mValue;
+        /**dealing with head node**/
+
+        if (head.value.equals(item)) {
+                head.count--;
+                if (head.count == 0) {
+                        head = head.next;
+                }
+                return;
         }
 
-
-        public Node getNext() {
-            return mNext;
+        if(head.next == null) {
+                return;
         }
 
+        /** set new PreNode and currNode
+         * let's deal with other nodes*/
 
-        public void setValue(int value) {
-            mValue = value;
+        Node<T, Integer> prevNode = head;
+        Node<T, Integer> currNode = head.next;
+
+        while (!currNode.value.equals(item) && currNode.next != null) {
+                currNode = currNode.next;
         }
 
-
-        public void setNext(Node next) {
-            mNext = next;
+        if(currNode.value.equals(item)) {
+                currNode.count--;
+                if (currNode.count == 0) {
+                        prevNode.next = currNode.next;
+                }
         }
-    } // end of inner class Node
+
+}   // end of removeOne()
+
+public void removeAll(T item) {
+    /** removing ALL of an instance of an item from the list */
+
+    /** check if there are any nodes to remove*/
+    if (head == null){
+        return;
+    }
+    
+    Node<T, Integer> currNode = head;
+    
+    while(head!=null&&head.value.equals(item)){
+        currNode = head;
+        head = head.next;
+        currNode.next = null;
+        currNode = null;   
+    }
+    
+    currNode = head;
+    
+    while(currNode !=null && currNode.next != null){
+        if(currNode.next.value.equals(item)){
+            Node<T, Integer> prevNode = currNode.next;
+            currNode.next = prevNode.next;
+            prevNode.next = null;
+            prevNode = null;
+            
+        }
+        else{
+            currNode = currNode.next;
+        }
+    }
+        
+}   // end of removeAll()
+
+public void print(PrintStream out) {
+        if(head == null) {
+                return;
+        }
+        Node<T, Integer> currNode = head;
+
+        do {
+                System.out.println(currNode.value + printDelim + currNode.count);
+                currNode = currNode.next;
+        } while (currNode != null);
+
+
+
+}   // end of print()
+
+private class Node<T, Integer> {
+/** Stored value inside node (the element). */
+private T value;
+/** count of element*/
+private Integer count;
+/** Reference to next node. */
+private Node<T, Integer> next;
+/** node constructor */
+Node(T value, Integer count, Node<T, Integer> next) {
+        this.value = value;
+        this.count = count;
+        this.next = next;
+}
+
+}  // end of inner class Node
 
 } // end of class LinkedListMultiset
