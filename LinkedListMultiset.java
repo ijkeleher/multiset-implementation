@@ -35,11 +35,11 @@ public void add(T item) {
         /** otherwise, set currentNode to head*/
         Node<T, Integer> currNode = head;
         /** iterate through list */
-        while (!currNode.value.equals(item) && currNode.next != null) {
+        while (!currNode.element.equals(item) && currNode.next != null) {
                 currNode = currNode.next;
         }
-        /**if value equal to existing value increment count */
-        if(currNode.value.equals(item)) {
+        /**if element equal to existing element increment count */
+        if(currNode.element.equals(item)) {
                 currNode.count++;
                 return;
         }
@@ -57,12 +57,12 @@ public int search(T item) {
         }
         /** set current node to head of the linkedlist */
         Node<T, Integer> currNode = head;
-        /** for each element in list check if value matches item */
-        while (!currNode.value.equals(item) && currNode.next != null) {
+        /** for each element in list check if element matches item */
+        while (!currNode.element.equals(item) && currNode.next != null) {
                 currNode = currNode.next;
         }
         /** if we find a match return the count */
-        if(currNode.value.equals(item)) {
+        if(currNode.element.equals(item)) {
                 return currNode.count;
         }
         /** return false if no matches found */
@@ -81,7 +81,7 @@ public void removeOne(T item) {
 
         /**dealing with head node**/
 
-        if (head.value.equals(item)) {
+        if (head.element.equals(item)) {
                 head.count--;
                 if (head.count == 0) {
                         head = head.next;
@@ -89,9 +89,9 @@ public void removeOne(T item) {
                 return;
         }
 
-        if(head.next == null) {
-                return;
-        }
+        // if(head.next == null) {
+        //         return;
+        // }
 
         /** set new PreNode and currNode
          * let's deal with other nodes*/
@@ -99,11 +99,12 @@ public void removeOne(T item) {
         Node<T, Integer> prevNode = head;
         Node<T, Integer> currNode = head.next;
 
-        while (!currNode.value.equals(item) && currNode.next != null) {
+        while (!currNode.element.equals(item) && currNode.next != null) {
                 currNode = currNode.next;
+                prevNode = currNode;
         }
 
-        if(currNode.value.equals(item)) {
+        if(currNode.element.equals(item)) {
                 currNode.count--;
                 if (currNode.count == 0) {
                         prevNode.next = currNode.next;
@@ -119,31 +120,31 @@ public void removeAll(T item) {
     if (head == null){
         return;
     }
-    
+
     Node<T, Integer> currNode = head;
-    
-    while(head!=null&&head.value.equals(item)){
+
+    while(head!=null&&head.element.equals(item)){
         currNode = head;
         head = head.next;
         currNode.next = null;
-        currNode = null;   
+        currNode = null;
     }
-    
+
     currNode = head;
-    
+
     while(currNode !=null && currNode.next != null){
-        if(currNode.next.value.equals(item)){
+        if(currNode.next.element.equals(item)){
             Node<T, Integer> prevNode = currNode.next;
             currNode.next = prevNode.next;
             prevNode.next = null;
             prevNode = null;
-            
+
         }
         else{
             currNode = currNode.next;
         }
     }
-        
+
 }   // end of removeAll()
 
 public void print(PrintStream out) {
@@ -152,25 +153,29 @@ public void print(PrintStream out) {
         }
         Node<T, Integer> currNode = head;
 
-        do {
-                System.out.println(currNode.value + printDelim + currNode.count);
+        //iterate through list
+        while (currNode != null){
+          //if count for current node is
+          if (currNode.count != 0){
+                System.out.println(currNode.element + printDelim + currNode.count);
+              }
                 currNode = currNode.next;
-        } while (currNode != null);
+        }
 
 
 
 }   // end of print()
 
 private class Node<T, Integer> {
-/** Stored value inside node (the element). */
-private T value;
+/** Stored element inside node (the element). */
+private T element;
 /** count of element*/
 private Integer count;
 /** Reference to next node. */
 private Node<T, Integer> next;
 /** node constructor */
-Node(T value, Integer count, Node<T, Integer> next) {
-        this.value = value;
+Node(T element, Integer count, Node<T, Integer> next) {
+        this.element = element;
         this.count = count;
         this.next = next;
 }
