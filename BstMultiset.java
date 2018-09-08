@@ -111,7 +111,7 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 
 	public boolean isEmpty(){
 		return root == null;
-	}
+	} // end of isEmpty()
 
 	public Node add(Node node, T item){
 		if (node == null)
