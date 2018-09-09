@@ -12,16 +12,17 @@ public class SortedLinkedListMultiset<T extends Comparable<T>> extends Multiset<
 
 	public SortedLinkedListMultiset() {
 		head = null;
-	} // end of SortedLinkedListMultiset()
+	} /** end of SortedLinkedListMultiset() */
 
 	public void add(T item) {
-		// if added item is null, skip the rest.
+		/** if added item is null, skip the rest.*/
 		if (item == null)
 			return;
-		// check if head exist, if it doesnt, add node head.
+		/** check if head exist, if it doesnt, add node head.*/
 		if (head == null) {
 			head = new Node<>(item, 1, null);
 			return;
+		/** set head if head exists*/
 		} else if (head.element.compareTo(item) > 0) {
 			Node<T, Integer> newHead = new Node<T,Integer>(item, 1, head);
 			head = newHead;
@@ -33,12 +34,12 @@ public class SortedLinkedListMultiset<T extends Comparable<T>> extends Multiset<
 
 		Node<T, Integer> currNode = head;
 		Node<T, Integer> nextNode = currNode.next;
-
+		/**iterate through nodes*/
 		while (currNode.next != null && nextNode.element.compareTo(item) < 0) {
 			currNode = nextNode;
 			nextNode = nextNode.next;
 		}
-
+		/** either add item to current node or create new node*/
 		if (nextNode != null){
 			if (nextNode.element.compareTo(item) == 0){
 				nextNode.count++;
@@ -48,9 +49,9 @@ public class SortedLinkedListMultiset<T extends Comparable<T>> extends Multiset<
 		} else {
 			currNode.next = new Node<T,Integer>(item, 1, nextNode);
 		}
-	} // end of add()
+	} /** end of add() */
 
-	//Can work as a binary search
+	/**Can work as a binary search */
 	public int search(T item) {
 		if (head == null) {
 			return 0;
@@ -67,13 +68,14 @@ public class SortedLinkedListMultiset<T extends Comparable<T>> extends Multiset<
 		}
 		// default return, please override when you implement this method
 		return 0;
-	} // end of add()
+	} /** end of add() */
 
+	/** remove a single item */
 	public void removeOne(T item) {
 		if (head == null) {
 			return;
 		}
-
+		/** remove single item from head if necessary */
 		if (head.element.compareTo(item) == 0) {
 			head.count--;
 			if (head.count == 0) {
@@ -84,7 +86,8 @@ public class SortedLinkedListMultiset<T extends Comparable<T>> extends Multiset<
 
 		Node<T, Integer> prevNode = head;
 		Node<T, Integer> currNode = head.next;
-
+		
+		/** remove single item from list */
 		while (currNode.element.compareTo(item) < 0 && currNode.next != null) {
 			prevNode = currNode;
 			currNode = currNode.next;

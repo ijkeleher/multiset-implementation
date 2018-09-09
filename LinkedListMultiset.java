@@ -20,7 +20,7 @@ int size;
 public LinkedListMultiset() {
         head = null;
         size = 0;
-}           // end of constructor
+} 
 
 
 public void add(T item) {
@@ -89,9 +89,6 @@ public void removeOne(T item) {
                 return;
         }
 
-        // if(head.next == null) {
-        //         return;
-        // }
 
         /** set new PreNode and currNode
          * let's deal with other nodes*/
@@ -111,7 +108,7 @@ public void removeOne(T item) {
                 }
         }
 
-}   // end of removeOne()
+}   /** end of removeOne() */
 
 public void removeAll(T item) {
     /** removing ALL of an instance of an item from the list */
@@ -145,7 +142,7 @@ public void removeAll(T item) {
         }
     }
 
-}   // end of removeAll()
+}   /** end of removeAll() */
 
 public void print(PrintStream out) {
         if(head == null) {
@@ -153,18 +150,19 @@ public void print(PrintStream out) {
         }
         Node<T, Integer> currNode = head;
 
-        //iterate through list
+        /** iterate through list*/
         while (currNode != null){
-          //if count for current node is
+          /**print nodes*/
           if (currNode.count != 0){
                 System.out.println(currNode.element + printDelim + currNode.count);
               }
+          /**advance to next node */
                 currNode = currNode.next;
         }
 
 
 
-}   // end of print()
+}   /** end of print() */
 
 private class Node<T, Integer> {
 /** Stored element inside node (the element). */
@@ -180,6 +178,6 @@ Node(T element, Integer count, Node<T, Integer> next) {
         this.next = next;
 }
 
-}  // end of inner class Node
+}  /** end of inner class Node */
 
-} // end of class LinkedListMultiset
+} /** end of class LinkedListMultiset*/
