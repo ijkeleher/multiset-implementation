@@ -26,9 +26,8 @@ public class Generator {
         Random r = new Random();
 
         for (int i = 0; i < dataSize; i++) {
-            char e = (alphabet.charAt(r.nextInt(length)));
-            String s = Character.toString(e);
-            data.add(s);
+            String e = "A " + (alphabet.charAt(r.nextInt(length)));
+            data.add(e);
         }
         
         getData().add("P");
@@ -43,7 +42,7 @@ public class Generator {
 
         int random = getRandomNumber(1, dataSize);
 
-        while (getData().size() < random) {
+        while (getData().size() < dataSize) {
             int n = getRandomNumber(1, 9);
             concat = "A " + n;
             getData().add(concat);
@@ -123,14 +122,14 @@ public class Generator {
         int random = getRandomNumber(1, dataSize);
         Random randomizer = new Random();
 
-        while (getData().size() < random) {
+        while (getData().size() < dataSize) {
             String w = words.get(randomizer.nextInt(words.size()));
             concat = "A " + w;
             getData().add(concat);
 
         }
 
-        while (getData().size() < dataSize) {
+        while (getData().size() < dataSize+ random) {
 
             String w = words.get(randomizer.nextInt(words.size()));
             String operation = getRandomOp(getRandomNumber(1, 3));
@@ -149,14 +148,14 @@ public class Generator {
     public static void fileWriter(String fileName) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
         for (String s : data) {
-            writer.write(s);
+            writer.write(s+"\n");
         }
         writer.close();
-
-        int index = 0;
+        //use this index number if you want to check you are generating right amount of items for datasize
+        int i = 0;
         for (String s : data) {
-            index++;
-            System.out.println(s);
+            i++;
+            System.out.println(i + s);
         }
 
     }
