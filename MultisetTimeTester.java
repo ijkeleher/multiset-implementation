@@ -141,35 +141,13 @@ public class MultisetTimeTester
 		throws IOException
 	{
 		String line;
-		int lineNum = 1;
 
 		while ((line = inReader.readLine()) != null) {
-			String[] tokens = line.split(" ");
 
-			// check if there is at least an operation command
-			if (tokens.length < 1) {
-				System.err.println(lineNum + ": not enough tokens.");
-				lineNum++;
-				continue;
-			}
-
-			String command = tokens[0];
-			// determine which operation to execute
-			switch (command.toUpperCase()) {
-				// add
-				case "A":
-					if (tokens.length == 2) {
-						multiset.add(tokens[1]);
-					}
-					else {
-						System.err.println(lineNum + ": not enough tokens.");
-					}
-					break;
-				default:
-					System.err.println(lineNum + ": Unknown command.");
-			}
+						multiset.add(line);
 
 	}
+	multiset.print(outStream);
 }
 
 
