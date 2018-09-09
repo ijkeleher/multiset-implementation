@@ -1,0 +1,8 @@
+robot
+macbook
+fortune
+book
+test
+bed
+lamp
+plant
