@@ -7,20 +7,139 @@ public class Generator {
     private static List<String> data = new ArrayList<>();
     private static List<String> words = new ArrayList<>();
 
-    // adjust this to change dataSize
+    // adjust this to change size of multiset
     private static int dataSize = 100;
 
     public static void main(String[] args) throws IOException {
-        //addWord add words to the word List 
+        //addWord add words to the word List from words.txt
         addWord();
+        
          //these add data to the data List
-        addStringDataWithSampling();
+        moreRemovalthanAddition();
+        sameAmountAdditionRemoval();
+        moreAdditionThanRemovalFifty();
+      moreAdditionThanRemovalSeventyFive();
+
+        
+      moreSearchThanAddition();
+      moreSearchThanRemoval();
+        
+
+
+        
+        
+       
+        
+            //these are for different types of multisets
+//        
 //        addIntDataWithSampling();
 //        addCharDataWithSampling();
     }
     
+    private static void sameAmountAdditionRemoval() throws IOException{
+        String file = "test6-sameAmountAdditionRemoval.in";
+        String concat = null;
+
+        Random randomizer = new Random();
+
+        while (getData().size() < (dataSize/2)) {
+            String w = words.get(randomizer.nextInt(words.size()));
+            concat = "A " + w;
+            getData().add(concat);
+        }
+        
+        while (getData().size() < dataSize) {
+            String w = words.get(randomizer.nextInt(words.size()));
+            concat = "RO " + w;
+            getData().add(concat);
+        }
+        getData().add("P");
+        getData().add("Q");
+        
+        fileWriter(file);
+    }
+    
+    
+    
+    private static void moreSearchThanAddition() throws IOException{
+        String file = "test6-moreSearchThanAddition.in";
+        String concat = null;
+
+        int random = getRandomNumber(1, (dataSize/2));
+        Random randomizer = new Random();
+
+        while (getData().size() < random) {
+            String w = words.get(randomizer.nextInt(words.size()));
+            concat = "A " + w;
+            getData().add(concat);
+        }
+        
+        while (getData().size() < dataSize) {
+            String w = words.get(randomizer.nextInt(words.size()));
+            concat = "S " + w;
+            getData().add(concat);
+        }
+        
+        getData().add("P");
+        getData().add("Q");
+        
+        fileWriter(file);
+    }
+    
+    private static void moreSearchThanRemoval() throws IOException{
+        String file = "test6-moreSearchThanRemoval.in";
+        String concat = null;
+
+        int random = getRandomNumber(1, (dataSize/2));
+        Random randomizer = new Random();
+
+        while (getData().size() < random) {
+            String w = words.get(randomizer.nextInt(words.size()));
+            concat = "A " + w;
+            getData().add(concat);
+            String r = words.get(randomizer.nextInt(words.size()));
+            concat = "RO " + r;
+            getData().add(concat);
+        }
+        
+        while (getData().size() < dataSize) {
+            String w = words.get(randomizer.nextInt(words.size()));
+            concat = "S " + w;
+            getData().add(concat);
+        }
+        
+        getData().add("P");
+        getData().add("Q");
+        
+        fileWriter(file);
+    }
+    
+    private static void moreRemovalthanAddition() throws IOException{
+        String file = "test6-moreRemovalthanAddition.in";
+        String concat = null;
+
+        int random = getRandomNumber(1, (dataSize/2));
+        Random randomizer = new Random();
+
+        while (getData().size() < random) {
+            String w = words.get(randomizer.nextInt(words.size()));
+            concat = "A " + w;
+            getData().add(concat);
+        }
+        
+        while (getData().size() < dataSize) {
+            String w = words.get(randomizer.nextInt(words.size()));
+            concat = "RO " + w;
+            getData().add(concat);
+        }
+        getData().add("P");
+        getData().add("Q");
+        
+        fileWriter(file);
+    }
+    
     private static void addCharDataWithSampling() throws IOException{
-        String file = "TestCustom.in";
+        String file = "test6-addCharDataWithSampling.in";
         String alphabet = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
         int length = alphabet.length();
         Random r = new Random();
@@ -38,7 +157,7 @@ public class Generator {
 
     private static void addIntDataWithSampling() throws IOException {
         String concat = null;
-        String file = "TestCustom.in";
+        String file = "test6-addIntDataWithSampling.in";
 
         int random = getRandomNumber(1, dataSize);
 
@@ -115,21 +234,49 @@ public class Generator {
         return r.nextInt((max - min) + 1) + min;
     }
 
-    public static void addStringDataWithSampling() throws IOException {
-        String file = "TestCustom.in";
+    public static void moreAdditionThanRemovalSeventyFive() throws IOException {
+        String file = "test6-moreAdditionThanRemoval75plus.in";
         String concat = null;
 
-        int random = getRandomNumber(1, dataSize);
+        int random = getRandomNumber(1, (dataSize/2));
         Random randomizer = new Random();
 
-        while (getData().size() < dataSize) {
+        while (getData().size() < (dataSize/4)*3 ) {
             String w = words.get(randomizer.nextInt(words.size()));
             concat = "A " + w;
+            getData().add(concat);
+        }
+
+        while (getData().size() < dataSize) {
+
+            String w = words.get(randomizer.nextInt(words.size()));
+            String operation = getRandomOp(getRandomNumber(1, 3));
+            concat = operation + w;
             getData().add(concat);
 
         }
 
-        while (getData().size() < dataSize+ random) {
+        getData().add("P");
+        getData().add("Q");
+
+        fileWriter(file);
+
+    }
+    
+    public static void moreAdditionThanRemovalFifty() throws IOException {
+        String file = "test6-moreAdditionThanRemoval50plus.in";
+        String concat = null;
+
+        int random = getRandomNumber(1, (dataSize/2));
+        Random randomizer = new Random();
+
+        while (getData().size() < (dataSize/2) ) {
+            String w = words.get(randomizer.nextInt(words.size()));
+            concat = "A " + w;
+            getData().add(concat);
+        }
+
+        while (getData().size() < dataSize) {
 
             String w = words.get(randomizer.nextInt(words.size()));
             String operation = getRandomOp(getRandomNumber(1, 3));
