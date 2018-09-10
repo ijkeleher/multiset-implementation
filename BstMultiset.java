@@ -12,13 +12,11 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 	private Node root;
 
 	BstMultiset() {
-		// Implement me!
-		// 1. Initialize root node
-		//root = new Node(null);
+
 	} // end of BstMultiset()
 	
 	/**
-	 * privade node class for our tree, this will hold elements
+	 * private node class for our tree, this will hold elements
 	 */
 
 	class Node implements Comparable<T>{
@@ -54,7 +52,9 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 
 	}
     /**
-     * Check if the tree is empty or not: - If it is, the firts added item will be
+     * Our add function
+     * 
+     * Check if the tree is empty or not: - If it is, the first added item will be
      * root - Else, return add(current node, value)
      */
 	@Override
@@ -102,6 +102,7 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		}
 	} // end of removeAll()
 
+	
 	@Override
 	public void print(PrintStream out) {
 		print(root, out);
@@ -128,7 +129,11 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		return node;
 	}// end add()
 
-
+/**
+ * our search function
+ * initial node is the root node, traverses all nodes checking for item
+ * 
+ * */
 	public  Node search(Node node, T item){
 		while(node != null){
 			if (node.compareTo(item) == 0)
@@ -143,7 +148,7 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		return node;
 	}// end search()
 
-    /** traverse the tree and print nodes */
+    /** traverse the tree and print all nodes */
 	public void print(Node node, PrintStream out) {
 	if (node != null) {
 		print(node.left, out);
