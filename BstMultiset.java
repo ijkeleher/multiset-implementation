@@ -16,17 +16,17 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		// 1. Initialize root node
 		//root = new Node(null);
 	} // end of BstMultiset()
+	
+	/**
+	 * privade node class for our tree, this will hold elements
+	 */
 
 	class Node implements Comparable<T>{
-		// Questions remain:
-		// Do we need key for the nodes?
-		// Does these value need to be private?
 		private Node left;
 		private Node right;
 		private T element;
 		private int count = 0;
 
-		// Does this have to be public
 		Node(T element) {
 			this.element = element;
 			this.left = null;
@@ -53,55 +53,53 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 
 
 	}
-
+    /**
+     * Check if the tree is empty or not: - If it is, the firts added item will be
+     * root - Else, return add(current node, value)
+     */
 	@Override
 	public void add(T item) {
-		// Implement me!
-		/*
-		 * Check if the tree is empty or not: - If it is, the firts added item will be
-		 * root - Else, return add(current node, value)
-		 */
-		// Check if the BST is empty:
-			// Add value to current position
 			if (isEmpty())root = add(root, item);
 			else add(root, item);
 	} // end of add()
 
 
+	/**
+	 *  traverse tree return number of items if found
+	 */
 	@Override
 	public int search(T item) {
 		Node result = search(root, item);
 		if (result != null)
 			return result.count;
 		else
-			//Output result.element and result.addCount
-			//return nothing
-			// default return, please Override when you implement this method
-			return 0;
-	} // end of add()
 
+			return 0;
+	} // end of search()
+	
+    /**
+     * search tree for item and remove single instances if found
+     */
 	@Override
 	public void removeOne(T item) {
-		// Implement me!
 		Node result = search(root, item);
 		if (result!= null){
 			if (result.count != 0){
+			    //remove just decrements by 1
 				result.remove();
 			}
 		}
 	} // end of removeOne()
 
+	/** search tree for item and set count to 0 if found*/
 	@Override
 	public void removeAll(T item) {
-		// Implement me!
 		Node result = search(root, item);
 		if (result!= null){
 			if (result.count != 0){
 				result.count = 0;
 			}
-			//else result.remove();
 		}
-		//root = remove(root, item);
 	} // end of removeAll()
 
 	@Override
@@ -113,11 +111,12 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		return root == null;
 	} // end of isEmpty()
 
+	/** add item to a node, creating a new one if necessary
+	 *  add to left or right depending on compareResults*/
 	public Node add(Node node, T item){
 		if (node == null)
 			node = new Node(item);
 		int compareResult = node.compareTo(item);
-		//System.out.println(compareResult);
 		if (compareResult > 0) {
 			node.left = add(node.left, item);
 		}
@@ -144,15 +143,8 @@ public class BstMultiset<T extends Comparable<T>> extends Multiset<T> {
 		return node;
 	}// end search()
 
-
+    /** traverse the tree and print nodes */
 	public void print(Node node, PrintStream out) {
-	/* ORDERED
-	if (node != null) {
-		print(node.left, out);
-		out.println(node.element + printDelim + node.count);
-		print(node.right, out);
-	}
-	 */
 	if (node != null) {
 		print(node.left, out);
 		if(node.count != 0)

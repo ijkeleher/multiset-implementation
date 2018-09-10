@@ -6,3 +6,5 @@ test
 bed
 lamp
 plant
+list
+tree
